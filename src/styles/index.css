@@ -1,0 +1,24 @@
+@import "tailwindcss";
+
+@theme {
+  --color-app-bg: #f5f7fb;
+  --color-surface: #ffffff;
+  --color-surface-muted: #f4f6fa;
+  --color-ink: #18243a;
+  --color-muted: #5f6c80;
+  --color-soft: #8893a5;
+  --color-brand: #4f46e5;
+  --color-brand-hover: #4338ca;
+  --color-brand-soft: #ecebff;
+  --color-line: #dce2eb;
+  --color-focus: #bbb7ff;
+  --color-danger: #b42318;
+  --radius-panel: 1.25rem;
+  --shadow-panel: 0 12px 40px rgba(24, 36, 58, 0.05);
+}
+
+@layer base {
+  body {
+    @apply bg-app-bg text-ink;
+  }
+}
