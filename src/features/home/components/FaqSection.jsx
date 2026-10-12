@@ -3,7 +3,7 @@ import SectionTitle from '../../../components/ui/SectionTitle.jsx'
 const questions = [
   {
     question: 'Can I manage tasks in this version?',
-    answer: 'Yes. You can add, edit, complete, and delete tasks in the dashboard. Changes reset when the page refreshes.',
+    answer: 'Yes. You can add, edit, complete, and delete tasks in the dashboard. Your tasks remain after the page refreshes.',
   },
   {
     question: 'What React concepts will this project cover?',

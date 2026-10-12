@@ -1,4 +1,4 @@
-// The hero illustrates these tasks; they also seed the dashboard on page load.
+// The hero illustrates these tasks; they also seed the dashboard on its first visit.
 export const sampleTasks = [
   {
     id: 'task-1',

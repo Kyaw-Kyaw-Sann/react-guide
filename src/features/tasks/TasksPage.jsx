@@ -1,15 +1,15 @@
-import SectionTitle from '../../../components/ui/SectionTitle.jsx'
-import TaskDashboard from '../../tasks/components/TaskDashboard.jsx'
+import SectionTitle from '../../components/ui/SectionTitle.jsx'
+import TaskDashboard from './components/TaskDashboard.jsx'
 
-export default function DashboardSection() {
+export default function TasksPage() {
   return (
-    <section id="dashboard" className="scroll-mt-8 bg-app-bg py-20 md:py-24" aria-labelledby="dashboard-title">
+    <section className="bg-app-bg py-20 md:py-24" aria-labelledby="tasks-page-title">
       <div className="mx-auto max-w-6xl px-5 lg:px-8">
         <SectionTitle
           eyebrow="Your workspace"
           title="Put your plans into action."
           description="Add, edit, complete, and delete tasks in your own workspace."
-          headingId="dashboard-title"
+          headingId="tasks-page-title"
         />
 
         <div className="mt-10 overflow-hidden rounded-[1.75rem] border border-line bg-surface shadow-[0_20px_60px_rgba(24,36,58,0.08)]">
@@ -24,7 +24,7 @@ export default function DashboardSection() {
           </div>
         </div>
         <p className="mt-4 text-center text-sm text-muted">
-          Changes stay on this page until you refresh it.
+          Your tasks are saved in this browser and remain after you refresh the page.
         </p>
       </div>
     </section>
