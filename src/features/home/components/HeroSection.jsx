@@ -20,7 +20,7 @@ export default function HeroSection() {
             shows the kind of work you can organize in your own dashboard.
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
-            <Button href="#dashboard">Open the dashboard</Button>
+            <Button to="/tasks">Open the dashboard</Button>
             <Button href="#features" variant="secondary">See the plan</Button>
           </div>
         </div>
@@ -40,7 +40,7 @@ export default function HeroSection() {
               {sampleTasks.map((task) => (
                 <li className="flex items-center gap-3 rounded-xl border border-line p-4" key={task.id}>
                   <span
-                    className={`grid size-6 shrink-0 place-items-center rounded-md border text-sm font-bold ${task.completed ? 'border-brand bg-brand text-white' : 'border-line bg-surface'}`}
+                    className={`grid size-6 shrink-0 place-items-center rounded-md border text-sm font-bold ${task.completed ? 'border-brand bg-brand text-on-brand' : 'border-line bg-surface'}`}
                     aria-hidden="true"
                   >
                     {task.completed ? '✓' : ''}
@@ -56,7 +56,7 @@ export default function HeroSection() {
                 <span>Example progress</span>
                 <span>{summary.completed} of {summary.total}</span>
               </div>
-              <div className="mt-3 h-2 overflow-hidden rounded-full bg-white" aria-hidden="true">
+              <div className="mt-3 h-2 overflow-hidden rounded-full bg-surface" aria-hidden="true">
                 <div className="h-full rounded-full bg-brand" style={{ width: `${summary.progressPercentage}%` }} />
               </div>
             </div>

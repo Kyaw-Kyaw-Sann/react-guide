@@ -2,9 +2,7 @@ import { useState } from 'react'
 import Button from '../../../components/ui/Button.jsx'
 import Input from '../../../components/ui/Input.jsx'
 import Select from '../../../components/ui/Select.jsx'
-
-const categoryOptions = ['Learning', 'Build', 'Design', 'Personal', 'Other']
-const priorityOptions = ['Low', 'Medium', 'High']
+import { taskCategories, taskPriorities } from '../data/taskOptions.js'
 
 export default function TaskForm({ task, onSubmit, onCancel }) {
   const [values, setValues] = useState({
@@ -54,8 +52,8 @@ export default function TaskForm({ task, onSubmit, onCancel }) {
           type="text"
           value={values.title}
         />
-        <Select label="Category" name="category" onChange={handleChange} options={categoryOptions} value={values.category} />
-        <Select label="Priority" name="priority" onChange={handleChange} options={priorityOptions} value={values.priority} />
+        <Select label="Category" name="category" onChange={handleChange} options={taskCategories} value={values.category} />
+        <Select label="Priority" name="priority" onChange={handleChange} options={taskPriorities} value={values.priority} />
         <Input label="Due date (optional)" name="dueDate" onChange={handleChange} type="date" value={values.dueDate} />
       </div>
       <div className="flex flex-wrap gap-3">

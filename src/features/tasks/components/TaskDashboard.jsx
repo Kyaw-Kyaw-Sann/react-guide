@@ -1,15 +1,36 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Button from '../../../components/ui/Button.jsx'
+import TaskFilters from './TaskFilters.jsx'
 import TaskForm from './TaskForm.jsx'
 import TaskList from './TaskList.jsx'
 import TaskSummary from './TaskSummary.jsx'
-import { sampleTasks } from '../data/sampleTasks.js'
 import { getTaskSummary } from '../utils/getTaskSummary.js'
+import { getVisibleTasks } from '../utils/getVisibleTasks.js'
+import { loadTasks, saveTasks } from '../utils/taskStorage.js'
+
+const defaultFilters = {
+  search: '',
+  status: 'All',
+  category: 'All',
+  priority: 'All',
+  sort: 'Default order',
+}
 
 export default function TaskDashboard() {
-  const [tasks, setTasks] = useState(sampleTasks)
+  const [tasks, setTasks] = useState(loadTasks)
   const [editor, setEditor] = useState(null)
+  const [filters, setFilters] = useState(defaultFilters)
   const summary = getTaskSummary(tasks)
+  const visibleTasks = getVisibleTasks(tasks, filters)
+  const hasActiveFilters = Object.keys(defaultFilters).some((key) => filters[key] !== defaultFilters[key])
+
+  useEffect(() => {
+    saveTasks(tasks)
+  }, [tasks])
+
+  function handleFilterChange(name, value) {
+    setFilters((currentFilters) => ({ ...currentFilters, [name]: value }))
+  }
 
   function openCreateForm() {
     setEditor({ mode: 'create' })
@@ -66,8 +87,16 @@ export default function TaskDashboard() {
         completed={summary.completed}
         remaining={summary.remaining}
       />
+      <TaskFilters
+        filters={filters}
+        onChange={handleFilterChange}
+        onClear={() => setFilters(defaultFilters)}
+        hasActiveFilters={hasActiveFilters}
+      />
       <TaskList
-        tasks={tasks}
+        tasks={visibleTasks}
+        totalTaskCount={tasks.length}
+        onClearFilters={() => setFilters(defaultFilters)}
         onAddTask={openCreateForm}
         onToggleTask={handleToggle}
         onEditTask={(task) => setEditor({ mode: 'edit', task })}
