@@ -1,101 +1,195 @@
 # React Learning Task Manager
 
-A small React project for learning through a practical task manager. The repository includes eight phases, from React foundations through task management, persistence, Context, and client-side routing.
+A practical React project for learning core concepts by building a complete task manager. It combines a responsive landing page, task management, browser persistence, theme switching, and client-side routing in one approachable codebase.
 
-## Run locally
+## Features
+
+- Add, edit, complete, and delete tasks
+- Validate a controlled task form
+- Search tasks by title
+- Filter by status, category, and priority
+- Sort by due date or priority
+- View total, completed, and remaining task counts
+- Save tasks in browser `localStorage`
+- Switch between light and dark themes
+- Restore the saved theme or use the operating system preference
+- Navigate between Home, Tasks, and Learn pages
+- Use a responsive mobile navigation menu
+- Open a React state-driven FAQ accordion
+- Display an accessible 404 page for unknown routes
+
+## React concepts covered
+
+- JSX and functional components
+- Props and component composition
+- List rendering and stable keys
+- Conditional rendering
+- Event handling and callback props
+- `useState`, `useEffect`, `useId`, and `useContext`
+- Controlled forms and validation
+- State ownership and lifting state
+- Functional and immutable state updates
+- Derived state and pure utility functions
+- Custom hooks and Context
+- Browser persistence with `localStorage`
+- Client-side routing and shared layouts
+- Accessible and responsive interactions
+
+## Tech stack
+
+- React
+- React Router
+- Vite
+- Tailwind CSS
+- Browser `localStorage`
+
+No backend is required. Tasks and theme preferences are stored only in the current browser.
+
+## Getting started
+
+Install the dependencies:
 
 ```bash
 npm install
+```
+
+Start the development server:
+
+```bash
 npm run dev
 ```
 
-Open the local URL printed by Vite. Use `npm run build` to verify the production bundle.
+Create a production build:
 
-## Structure
+```bash
+npm run build
+```
+
+Preview the production build locally:
+
+```bash
+npm run preview
+```
+
+## Routes
+
+| Route | Purpose |
+| --- | --- |
+| `/` | Landing page with the project introduction, features, and FAQ |
+| `/tasks` | Interactive task dashboard |
+| `/learn` | Summary of the eight learning phases |
+| `*` | Not-found page for unknown URLs |
+
+## Project structure
 
 ```text
 src/
-├── app/             # Routes, shared layout, and app-wide providers
-├── components/ui/   # Reusable, feature-independent UI
-├── features/home/   # Landing page and its website sections
-├── features/learn/  # Learning roadmap page
-├── features/tasks/  # Tasks page, dashboard components, and data
-├── pages/           # General pages such as the 404 page
-└── styles/          # Tailwind import, theme tokens, and base styles
+|-- app/                 # Route configuration, shared layout, and providers
+|-- components/
+|   `-- ui/              # Reusable, feature-independent UI components
+|-- features/
+|   |-- home/            # Landing page and website sections
+|   |-- learn/           # Learning roadmap page
+|   `-- tasks/           # Task page, components, data, and utilities
+|-- pages/               # General pages such as the 404 page
+|-- styles/              # Tailwind import, theme tokens, and base styles
+`-- main.jsx             # React entry point and BrowserRouter
 ```
 
-## Phase 1 learning notes
+## Architecture
 
-- `main.jsx` mounts the app with React's `createRoot`.
-- At Phase 1, `App.jsx` composed one page. Phase 8 later turns it into the route configuration.
-- `Button`, `Input`, and `SectionTitle` receive data through props and own their presentation.
-- `Input` uses `useId` to connect its label and helper message to the input accessibly.
-- `styles/index.css` imports Tailwind and defines shared colors, radius, and shadow with `@theme`.
-- Component markup uses Tailwind utilities; reusable components keep repeated UI patterns in one place.
+The project uses feature-based folders so related UI, data, and logic stay together.
 
-## Phase 2 learning notes
+- `app/` owns app-level composition, routes, layouts, and global providers.
+- `components/ui/` contains reusable presentation components such as buttons and form controls.
+- `features/home/` owns the landing-page experience.
+- `features/tasks/` owns task state, forms, filters, storage, and task-specific UI.
+- `features/learn/` presents the learning roadmap.
+- `pages/` contains pages that do not belong to one feature.
 
-- `HomePage.jsx` composes the page from focused section components.
-- Navigation and CTA links point to section IDs on the same page.
-- Feature cards, FAQ entries, and preview tasks are rendered from arrays with stable keys.
-- `Button` renders a link when given `href` and a button otherwise.
-- Native `<details>` elements provide keyboard-accessible FAQ disclosure without extra state.
-- At Phase 2, the dashboard contained sample data for presentation. The actions were added in Phase 4.
+Task data follows one-directional React data flow:
 
-## Phase 3 learning notes
+```text
+User action
+  -> event handler
+  -> state update
+  -> derived values
+  -> React rerender
+  -> localStorage effect
+```
 
-- `sampleTasks.js` defines the task shape with a stable `id` for each item.
-- At Phase 3, the dashboard section placed `TaskDashboard` inside the home layout. Phase 8 later moves it to `TasksPage`.
-- `getTaskSummary` derives counts for the Hero example and the dashboard separately.
-- `TaskDashboard` passes the derived counts to `TaskSummary` and the task array to `TaskList`.
-- `TaskList` maps each task to a `TaskCard` using `task.id` as the React key.
-- `TaskList` conditionally renders `EmptyState` when the array is empty. Delete all tasks to see this branch.
+`TaskDashboard` owns the task, editor, and filter states. It passes data down through props and receives user actions through callback props. Summary and visible-task values are derived from the task state instead of being stored as duplicate state.
 
-## Phase 4 learning notes
+## Learning roadmap
 
-- `TaskDashboard` owns the task array with `useState`. The Hero is a separate sample illustration.
-- Add, edit, complete, and delete handlers use functional state updates and return new arrays/objects instead of mutating existing tasks.
-- `TaskForm` uses controlled fields for title, category, priority, and optional due date. A blank title shows an inline validation error.
-- `TaskDashboard` also owns temporary UI state: which form is open and which task is being edited.
-- `TaskCard` receives action callbacks through props. Delete asks for confirmation before removing a task.
-- At this phase, changes existed only in memory. Phase 6 adds browser persistence.
+| Phase | What was built | Main concepts |
+| --- | --- | --- |
+| 1 | Project foundation and shared UI | JSX, components, props, composition, Tailwind CSS |
+| 2 | Responsive website shell | Sections, array rendering, semantic HTML, responsive design |
+| 3 | Task dashboard UI | Lists, keys, derived values, conditional rendering |
+| 4 | Task management | State, events, controlled forms, validation, immutable updates |
+| 5 | Search, filters, and sorting | Derived state, array methods, pure functions |
+| 6 | Browser persistence | Effects, lazy initialization, JSON, `localStorage` |
+| 7 | Theme switching | Context, custom hook, global state, semantic color tokens |
+| 8 | Client-side routing | Routes, links, shared layout, `Outlet`, active navigation, 404 page |
 
-## Phase 5 learning notes
+The finished FAQ also replaces the original native disclosure with a React state-driven accordion. The responsive header uses local state for its mobile dropdown menu.
 
-- `TaskDashboard` keeps the task array as the source of truth and stores only the search, filter, and sort selections separately.
-- `getVisibleTasks` derives the displayed list on each render without changing the original task order. Search ignores case and surrounding spaces.
-- Status, category, and priority filters can be combined. Sorting can show earliest due dates first (tasks without dates last) or highest priority first.
-- Summary cards count every task; the list reports how many of those tasks match the current selections.
-- An empty task collection and a search with no matches show different messages. Completing a task while filtering for pending tasks removes it from the visible list.
+## How to study this project
 
-## Phase 6 learning notes
+Read the source in this order:
 
-- `useState(loadTasks)` uses a lazy initializer, so React reads browser storage only while creating the task state instead of on every render.
-- `useEffect` saves the latest task array after `tasks` changes. Add, edit, complete, and delete handlers do not need to know how persistence works.
-- `taskStorage.js` converts arrays to JSON when saving and parses JSON when loading because `localStorage` stores strings only.
-- A saved empty array is valid, so deleting every task stays deleted after refresh. Missing or invalid saved data falls back to the sample tasks.
-- Storage errors are caught so the task manager can continue working in memory when browser storage is unavailable.
-- Search, filter, sort, and editor state are temporary UI choices and are intentionally not persisted.
+1. `index.html`, `src/main.jsx`, and `src/app/App.jsx`
+2. `src/app/AppLayout.jsx` and `src/app/ThemeProvider.jsx`
+3. `src/styles/index.css` and `src/components/ui/`
+4. `src/features/home/` and the page components
+5. `src/features/tasks/data/` and `src/features/tasks/utils/`
+6. Small task components such as `TaskCard` and `TaskForm`
+7. `TaskDashboard.jsx` last, after understanding its children and utilities
 
-## Phase 7 learning notes
+For every file, answer these questions:
 
-- `ThemeProvider` owns the app-wide light or dark theme. `App` places the provider above the page so any descendant can read that shared state.
-- `useTheme` wraps `useContext` and gives components a clear error if they try to read the theme outside its provider.
-- `SiteHeader` reads the theme and passes presentation props to `ThemeToggle`, keeping the shared UI component independent from app state.
-- The first visit follows the operating system preference. Later visits restore the user's saved choice from `localStorage`.
-- Semantic color tokens such as `surface`, `ink`, and `line` let existing Tailwind classes adapt without adding dark-mode classes to every component.
-- Task state remains local to `TaskDashboard`; Context is used only for state that truly belongs to the whole app.
+- What is this file responsible for?
+- What props or input does it receive?
+- What state does it own?
+- What values does it derive?
+- What events does it handle?
+- What side effects does it perform?
+- Which components depend on it?
 
-## Phase 8 learning notes
+When rebuilding the project without AI, complete one phase at a time:
 
-- `BrowserRouter` connects the app to the browser URL and history. `Routes` and `Route` map `/`, `/tasks`, `/learn`, and unknown paths to page components.
-- `AppLayout` renders the shared header and footer once. Each matched page appears where the layout renders `Outlet`.
-- `NavLink` provides the active navigation state, while `Link` changes routes without requesting a new HTML document.
-- `Button` renders a router `Link` when it receives `to`, an anchor when it receives `href`, and a button otherwise.
-- The task dashboard now belongs to `TasksPage`; its localStorage data remains available after route changes and refreshes.
-- The `*` route handles unknown URLs with a useful 404 page instead of an empty screen.
-- A production server using `BrowserRouter` must send `index.html` for app routes such as `/tasks` and `/learn`.
+1. Write the user requirements.
+2. Sketch the component tree.
+3. Decide which component owns each state value.
+4. Implement the smallest working behavior.
+5. Test normal, empty, and error cases manually.
+6. Compare with this project only after finishing your attempt.
+7. Commit the completed phase before continuing.
 
-## Before the next phase
+## Persistence behavior
 
-Navigate between Home, Tasks, and Learn, then use the browser Back and Forward buttons. Open an unknown URL to see the 404 route. Finally, trace how `BrowserRouter`, `Routes`, `AppLayout`, `Outlet`, and a page component work together to render one URL.
+- Tasks are loaded lazily from `localStorage` when the dashboard state is created.
+- Task changes are saved after the task state updates.
+- A saved empty array remains empty after refresh.
+- Missing or invalid saved task data falls back to sample tasks.
+- Theme preference is saved separately from task data.
+- Search, filters, sorting, the open editor, mobile menu, and FAQ state are intentionally temporary.
+
+Clearing site data or using another browser removes access to the saved tasks. This project does not sync data between devices.
+
+## Production deployment
+
+The app uses `BrowserRouter`. A production server must return `index.html` for client-side routes such as `/tasks` and `/learn`; otherwise, refreshing a nested route may return a server-level 404 response.
+
+## Next learning step
+
+Rebuild the project in a new repository without copying the source. After the rebuild, add one feature that does not exist here, such as:
+
+- Clear all completed tasks
+- Filter overdue tasks
+- Show task counts by category
+- Reset all saved data
+- Add a Light, Dark, and System theme selector
+
+Adding a new feature independently is the best check that you understand the React data flow instead of only remembering the existing code.
